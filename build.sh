@@ -1,0 +1,1 @@
+scp target/mapdraw-0.0.1-SNAPSHOT.jar root@47.110.86.46:/ccmpayment/map/
