@@ -39,13 +39,17 @@
 </head>
 <body>
 <div id="allmap" style="overflow:hidden;zoom:1;position:relative;">
+    请输入城市名: <input id="cityName" type="text" value="广州市" style="width:100px; margin-right:10px;" />
+    <input id = 'addCityname' type="button" value="确定"/>
+    关键字: <input value = '南沙碧桂园' type="text" id = "keyword">
+    <input id = 'search' type="button" value="搜索"/>
     <div id="map" style="height:100%;-webkit-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;"></div>
 </div>
 <div id="result">
     <!--<input type="button" value="获取" onclick="onc()"/> -->
-    <input style="width: 100px;height: 60px" type="button" value="清除" onclick="clearAll()"/>
+    <input style="width: 100px;height: 60px; margin-left:30px" type="button" value="清除" onclick="clearAll()"/>
     <br>
-    <input style="width: 80%;height: 50px" type="text" id = "draw">
+    <input style="width: 80%;height: 50px; margin-left:30px" type="text" id = "draw">
 </div>
 <script type="text/javascript">
 
@@ -54,6 +58,13 @@
     var poi = new BMap.Point(116.307852,40.057031);
     map.centerAndZoom(poi, 16);
     map.enableScrollWheelZoom();
+
+    var local = new BMap.LocalSearch(map, {
+        renderOptions:{map: map}
+    });
+    local.search("景点");
+
+
     var overlays = [];
     var jsonstr = "";
     var overlaycomplete = function(e){
@@ -121,7 +132,32 @@
 
 
 
+    document.getElementById("search").onclick = function(){
+        var keyword = document.getElementById("keyword").value;
+        var local = new BMap.LocalSearch(map, {
+            renderOptions:{map: map}
+        });
+        local.search(keyword);
+        map.enableScrollWheelZoom();
+    }
 
+    document.getElementById("addCityname").onclick = function(){
+        //根据城市名定位
+        var city = document.getElementById("cityName").value;
+        if(city != ""){
+            map.centerAndZoom(city,16);      // 用城市名设置地图中心点
+
+        }
+    }
+
+
+    //根据城市名定位
+    function theLocation(){
+        var city = document.getElementById("cityName").value;
+        if(city != ""){
+            map.centerAndZoom(city,16);      // 用城市名设置地图中心点
+        }
+    }
 
 
     /**
